@@ -3,11 +3,13 @@ Marine Diesel Engine Fault Diagnosis — ANN System
 Lebanese American University — Thesis Project
 
 Usage:
-    python main.py             # Run full pipeline (EDA + Model + Comparison)
-    python main.py --eda       # EDA only
-    python main.py --model     # Train ANN only
-    python main.py --compare   # Classifier comparison only
+    python main.py              # Run full pipeline
+    python main.py --eda        # EDA only
+    python main.py --model      # Train ANN only
+    python main.py --compare    # Classifier comparison only
+    python main.py --severity   # Severity estimation only
     python main.py --predict --mip -5.1 --ikw -5.2 --pcom -4.2 --pmx -5.1 --exh 5.2
+    streamlit run app.py        # Launch interactive dashboard
 """
 import sys
 import os
@@ -21,6 +23,7 @@ from data_preparation import FAULT_LABELS, FAULT_NAMES, FEATURES
 from eda import run_eda
 from ann_model import run_model
 from classifier_comparison import run_comparison
+from severity_estimation import run_severity_estimation
 
 
 def predict_fault(args):
@@ -69,10 +72,11 @@ def print_banner():
 
 def main():
     parser = argparse.ArgumentParser(description='Diesel Engine Fault Diagnosis ANN')
-    parser.add_argument('--eda',     action='store_true', help='Run EDA only')
-    parser.add_argument('--model',   action='store_true', help='Train ANN only')
-    parser.add_argument('--compare', action='store_true', help='Classifier comparison only')
-    parser.add_argument('--predict', action='store_true', help='Predict single sample')
+    parser.add_argument('--eda',      action='store_true', help='Run EDA only')
+    parser.add_argument('--model',    action='store_true', help='Train ANN only')
+    parser.add_argument('--compare',  action='store_true', help='Classifier comparison only')
+    parser.add_argument('--severity', action='store_true', help='Severity estimation only')
+    parser.add_argument('--predict',  action='store_true', help='Predict single sample')
     parser.add_argument('--mip',  type=float, default=0.0)
     parser.add_argument('--ikw',  type=float, default=0.0)
     parser.add_argument('--pcom', type=float, default=0.0)
@@ -90,15 +94,19 @@ def main():
         run_model()
     elif args.compare:
         run_comparison()
+    elif args.severity:
+        run_severity_estimation()
     else:
         # Full pipeline
         run_eda()
         run_model()
         run_comparison()
+        run_severity_estimation()
         print('\n' + '='*60)
         print('  PIPELINE COMPLETE')
-        print('  Figures (1–16) saved to: results/figures/')
-        print('  Model saved to:          results/models/')
+        print('  Figures (1–18) saved to: results/figures/')
+        print('  Models saved to:         results/models/')
+        print('  Dashboard: streamlit run app.py')
         print('='*60 + '\n')
 
 
