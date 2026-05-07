@@ -99,14 +99,47 @@ LAU_thesis/
 
 ## 5. Installation
 
+### Step 1 — Clone the repository
 ```bash
-# Clone the repository
 git clone https://github.com/MohamadELOssman/LAU_thesis.git
 cd LAU_thesis
+```
 
-# Install dependencies
+### Step 2 — Create a Python virtual environment
+
+A virtual environment keeps the project dependencies isolated from your system Python.
+
+**On macOS / Linux:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+**On Windows (Command Prompt):**
+```cmd
+python -m venv venv
+venv\Scripts\activate.bat
+```
+
+**On Windows (PowerShell):**
+```powershell
+python -m venv venv
+venv\Scripts\Activate.ps1
+```
+
+Once activated, your terminal prompt will show `(venv)` — this means the environment is active and any packages you install stay inside the project folder.
+
+### Step 3 — Install dependencies
+```bash
 pip install -r requirements.txt
 ```
+
+### Step 4 — Deactivate when done (optional)
+```bash
+deactivate
+```
+
+> **Note:** Always activate the virtual environment (`source venv/bin/activate` or `venv\Scripts\activate`) before running any project command in a new terminal session.
 
 **Requirements:** `numpy`, `pandas`, `matplotlib`, `seaborn`, `scikit-learn`, `streamlit`
 
